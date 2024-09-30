@@ -17,7 +17,9 @@ class Role(models.Model):
         return self.name
 
 class CustomUser(AbstractUser):
+    employee_id = models.CharField(max_length=10, unique=True, null='-')
     is_manager = models.BooleanField(default=False)
     department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, blank=True)
     role = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, blank=True)
+
     

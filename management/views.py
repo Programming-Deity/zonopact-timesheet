@@ -1,6 +1,7 @@
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect
+from management.decorators import manager_required
 from .models import Role, Department
 from django.core.paginator import Paginator
 from .models import CustomUser
@@ -10,11 +11,11 @@ from django.contrib import messages, auth
 
 
 def is_manager(user):
-    return user.is_manager
+    return user.is_authenticated and user.role == 'manager'
 
-
-@login_required(login_url='login')
-@user_passes_test(is_manager)
+@login_required
+@manager_required
+# @user_passes_test(is_manager)
 def dashboard(request,):
     roles = Role.objects.all()
     dept = CustomUser.objects.filter(department=1)
