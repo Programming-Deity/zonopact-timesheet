@@ -33,8 +33,8 @@ def dashboard(request,):
     return render(request, 'roles/management_dashboard.html', {'page_obj': page_obj, 'search_query': search_query, 'count_dept':count_dept})
 
 
-@login_required(login_url='login')
-@user_passes_test(is_manager)
+@login_required
+@manager_required
 def add_role(request):
     if request.method == 'POST':
         form = RoleForm(request.POST)
