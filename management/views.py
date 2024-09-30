@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect
 from management.decorators import manager_required
 from .models import Role, Department
+from django.contrib import messages
 from django.core.paginator import Paginator
 from .models import CustomUser
 from .forms import RoleForm, RegistrationForm
@@ -51,7 +52,9 @@ def registerUser(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'You are now register and can log in')
             return redirect('login')
+            
     else:
         form = RegistrationForm()
     return render(request, 'roles/register.html', context={'form': form})
